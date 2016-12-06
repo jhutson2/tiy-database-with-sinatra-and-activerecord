@@ -17,10 +17,9 @@ class Employee < ActiveRecord::Base
   end
 end
 
-# Sinatra code starts here
-
-# This magic tells Sinatra to close the database connection
-# after each request
+class Course < ActiveRecord::Base
+  self.primary_key = :name
+end
 after do
   ActiveRecord::Base.connection.close
 end
@@ -39,6 +38,16 @@ get "/new_employee" do
   erb :new_employee
 end
 
+get "/new_course" do
+  erb :new_course
+end
+
+get "/courses" do
+  @courses = Course.all
+
+  erb :courses
+end
+
 post "/create_employee" do
   Employee.create(params)
 
@@ -51,10 +60,22 @@ get '/show_employee' do
   erb :employee
 end
 
+get '/show_course' do
+  @course = Course.find(params["id"])
+
+  erb :course
+end
+
 get '/edit_employee' do
   @employee = Employee.find(params["id"])
 
   erb :edit_employee
+end
+
+get '/edit_course' do
+  @course = Course.find(params["id"])
+
+  erb :edit_course
 end
 
 post '/update_employee' do
@@ -63,6 +84,14 @@ post '/update_employee' do
   employee.update_attributes(params)
 
   redirect to("/employees")
+end
+
+post '/update_course' do
+  course = Course.find(params["id"])
+
+  course.update_attributes(params)
+
+  redirect to("/courses")
 end
 
 get '/search_employee' do
@@ -76,4 +105,23 @@ get '/delete_employee' do
   employee.delete
 
   redirect to('/employees')
+end
+
+post '/create_course' do
+  Course.create(params)
+
+  redirect to("/courses")
+end
+
+get '/delete_course' do
+  courses = Course.find(params["id"])
+  courses.delete
+
+  redirect to('/courses')
+end
+
+get '/search_course' do
+  @courses = Course.where(name: params["search"])
+
+  erb :courses
 end

@@ -33,8 +33,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="/employees">Employees</a></li>
+            <li><a href="#">Home</a></li>
+            <li class="active"><a href="/employees">Employees</a></li>
+            <li><a href="/courses">Courses</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -72,6 +73,7 @@
               <a href="/show_employee?id=<%= employee.id %>">Show</a>
               <a href="/edit_employee?id=<%= employee.id %>">Edit</a>
               <a href="/delete_employee?id=<%= employee.id %>">Delete</a>
+
             </td>
           </tr>
           <% end %>
